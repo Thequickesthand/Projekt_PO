@@ -37,15 +37,15 @@ namespace Pożyczki
                 {
                     case 1:
                         Console.Clear();
-                        BazaKlientow();
+                        MBazaKlientow();
                         break;
                     case 2:
                         Console.Clear();
-                        DodajKlienta();
+                        MDodajKlienta();
                         break;
                     case 3:
                         Console.Clear();
-                        KalkulatorRat();
+                        MKalkulatorRat();
                         break;
                     case 4:
                         System.Diagnostics.Process.GetCurrentProcess().Kill();
@@ -57,7 +57,7 @@ namespace Pożyczki
             }
         }
 
-        public static void BazaKlientow()
+        private static void MBazaKlientow()
         {
             int i = 0;
             
@@ -116,12 +116,12 @@ namespace Pożyczki
             }
         }
 
-        public static void DodajKlienta()
+        private static void MDodajKlienta()
         {
             //
         }
 
-        public static void KalkulatorRat()
+        private static void MKalkulatorRat()
         {
             //
         }

@@ -6,6 +6,16 @@ namespace Pożyczki
 {
     internal static class Menu
     {
+        private static void Blad()
+        {
+            Console.Clear();
+            Console.WriteLine(" ______________________");
+            Console.WriteLine("|                      |");
+            Console.WriteLine("|        BŁĄD          |");
+            Console.WriteLine("|______________________|");
+            Console.ReadKey();
+            Console.Clear();
+        }
         public static void MenuGlowne()
         {
             while (0 == 0)
@@ -41,13 +51,7 @@ namespace Pożyczki
                         System.Diagnostics.Process.GetCurrentProcess().Kill();
                         break;
                     default:
-                        Console.Clear();
-                        Console.WriteLine(" ______________________");
-                        Console.WriteLine("|                      |");
-                        Console.WriteLine("|        BŁĄD          |");
-                        Console.WriteLine("|______________________|");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Blad();
                         break;
                 }
             }
@@ -105,13 +109,7 @@ namespace Pożyczki
                         break;
                     default:
                         i--;
-                        Console.Clear();
-                        Console.WriteLine(" ______________________");
-                        Console.WriteLine("|                      |");
-                        Console.WriteLine("|        BŁĄD          |");
-                        Console.WriteLine("|______________________|");
-                        Console.ReadKey();
-                        Console.Clear();
+                        Blad();
                         break;
                 }
                 i++;

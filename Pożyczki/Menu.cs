@@ -20,7 +20,7 @@ namespace Pożyczki
         {
             while (0 == 0)
             {
-                int caseSwitch;
+                string caseSwitch;
 
                 Console.WriteLine(" ______________________");
                 Console.WriteLine("|                      |");
@@ -30,21 +30,21 @@ namespace Pożyczki
                 Console.WriteLine("|                      |");
                 Console.WriteLine("|  4. Wyjście          |");
                 Console.WriteLine("|______________________|");
-                Console.WriteLine("\nTwój wybór: ");
-                caseSwitch = int.Parse(Console.ReadKey().KeyChar.ToString()); //Poprawić tak żeby czytało klawisz za dwukropkiem. Dodać ewentualny wyjątek (wyświetlaj błąd po wprowadzeniu litery)
+                Console.Write("\nTwój wybór: ");
+                caseSwitch = Console.ReadKey().KeyChar.ToString(); //Poprawić tak żeby czytało klawisz za dwukropkiem. Dodać ewentualny wyjątek (wyświetlaj błąd po wprowadzeniu litery)
                //Zaimplementować wyjątek który będzie wyświetlał Blad() po kliknieciu litery na klawiaturze.
 
                 switch (caseSwitch)
                 {
-                    case 1:
+                    case "1":
                         Console.Clear();
                         MBazaKlientow();
                         break;
-                    case 2:
+                    case "2":
                         Console.Clear();
                         //Puste miejsca na przyszłe metody
                         break;
-                    case 3:
+                    case "3":
                         Console.Clear();
                         double[] lista = new double[3];
                         lista = Kalkulator.ObliczRaty();
@@ -53,7 +53,7 @@ namespace Pożyczki
                         Console.ReadKey();
                         Console.Clear();
                         break;
-                    case 4:
+                    case "4":
                         System.Diagnostics.Process.GetCurrentProcess().Kill();
                         break;
                     default:
@@ -69,7 +69,7 @@ namespace Pożyczki
             
             while ( i == 0 )
             {
-                int caseSwitch;
+                string caseSwitch;
                 Console.WriteLine(" ________________________________________");
                 Console.WriteLine("|                                        |");
                 Console.WriteLine("|  1. Wyświetl wszystkich klientów       |");
@@ -81,42 +81,42 @@ namespace Pożyczki
                 Console.WriteLine("|                                        |");
                 Console.WriteLine("|  7. Wróć                               |");
                 Console.WriteLine("|________________________________________|");
-                Console.WriteLine("\nTwój wybór: ");
-                caseSwitch = int.Parse(Console.ReadKey().KeyChar.ToString()); //Dokładnie to samo co wyżej
+                Console.Write("\nTwój wybór: ");
+                caseSwitch = Console.ReadKey().KeyChar.ToString();
 
                 switch (caseSwitch)
                 {
-                    case 1:
+                    case "1":
                         i--;
                         Console.Clear();
                         //
                         break;
-                    case 2:
+                    case "2":
                         i--;
                         Console.Clear();
                         //
                         break;
-                    case 3:
+                    case "3":
                         i--;
                         Console.Clear();
                         MWyświetlP();
                         break;
-                    case 4:
+                    case "4":
                         i--;
                         Console.Clear();
                         MWyświetlD();
                         break;
-                    case 5:
+                    case "5":
                         i--;
                         Console.Clear();
                         //
                         break;
-                    case 6:
+                    case "6":
                         i--;
                         Console.Clear();
                         //
                         break;
-                    case 7:
+                    case "7":
                         Console.Clear();
                         break;
                     default:
@@ -134,7 +134,7 @@ namespace Pożyczki
 
             while (i == 0)
             {
-                int caseSwitch;
+                string caseSwitch;
                 Console.WriteLine(" ________________________________________");
                 Console.WriteLine("|                                        |");
                 Console.WriteLine("|  1. Obecnych                           |");
@@ -142,22 +142,22 @@ namespace Pożyczki
                 Console.WriteLine("|                                        |");
                 Console.WriteLine("|  3. Wróć                               |");
                 Console.WriteLine("|________________________________________|");
-                Console.WriteLine("\nTwój wybór: ");
-                caseSwitch = int.Parse(Console.ReadKey().KeyChar.ToString()); //Dokładnie to samo co wyżej
+                Console.Write("\nTwój wybór: ");
+                caseSwitch = Console.ReadKey().KeyChar.ToString(); //Dokładnie to samo co wyżej
 
                 switch (caseSwitch)
                 {
-                    case 1:
+                    case "1":
                         i--;
                         Console.Clear();
                         //
                         break;
-                    case 2:
+                    case "2":
                         i--;
                         Console.Clear();
                         //
                         break;
-                    case 3:
+                    case "3":
                         Console.Clear();
                         break;
                     default:
@@ -175,7 +175,7 @@ namespace Pożyczki
 
             while (i == 0)
             {
-                int caseSwitch;
+                string caseSwitch;
                 Console.WriteLine(" ________________________________________");
                 Console.WriteLine("|                                        |");
                 Console.WriteLine("|  1. Obecnych                           |");
@@ -183,22 +183,22 @@ namespace Pożyczki
                 Console.WriteLine("|                                        |");
                 Console.WriteLine("|  3. Wróć                               |");
                 Console.WriteLine("|________________________________________|");
-                Console.WriteLine("\nTwój wybór: ");
-                caseSwitch = int.Parse(Console.ReadKey().KeyChar.ToString()); //Dokładnie to samo co wyżej
+                Console.Write("\nTwój wybór: ");
+                caseSwitch = Console.ReadKey().KeyChar.ToString(); //Dokładnie to samo co wyżej
 
                 switch (caseSwitch)
                 {
-                    case 1:
+                    case "1":
                         i--;
                         Console.Clear();
                         //
                         break;
-                    case 2:
+                    case "2":
                         i--;
                         Console.Clear();
                         //
                         break;
-                    case 3:
+                    case "3":
                         Console.Clear();
                         break;
                     default:

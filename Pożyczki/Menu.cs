@@ -46,7 +46,12 @@ namespace Pożyczki
                         break;
                     case 3:
                         Console.Clear();
-                        //
+                        double[] lista = new double[3];
+                        lista = Kalkulator.ObliczRaty();
+                        Console.WriteLine("| Pieniądze do spłaty | Rata | Ilość rat |");
+                        Console.WriteLine("| " + lista[0] + " | " + lista[1] + " | " + lista[2] + " |");
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
                     case 4:
                         System.Diagnostics.Process.GetCurrentProcess().Kill();

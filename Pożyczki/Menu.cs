@@ -41,11 +41,11 @@ namespace Pożyczki
                         break;
                     case 2:
                         Console.Clear();
-                        MDodajKlienta();
+                        //Puste miejsca na przyszłe metody
                         break;
                     case 3:
                         Console.Clear();
-                        MKalkulatorRat();
+                        //
                         break;
                     case 4:
                         System.Diagnostics.Process.GetCurrentProcess().Kill();
@@ -67,12 +67,13 @@ namespace Pożyczki
                 Console.WriteLine(" ________________________________________");
                 Console.WriteLine("|                                        |");
                 Console.WriteLine("|  1. Wyświetl wszystkich klientów       |");
-                Console.WriteLine("|  2. Wyświetl obecnych pożyczkobiorców  |");
-                Console.WriteLine("|  3. Wyświetl obecnych dłużników        |");
-                Console.WriteLine("|  4. Spłać rate                         |");
-                Console.WriteLine("|  5. Spłać dług                         |");
+                Console.WriteLine("|  2. Znajdz klienta                     |"); //Po PESEL, opcji nie było na kartce bo dopiero teraz wpadła mi do głowy. Będzie wyglądać profesjonalniej małym kosztem.
+                Console.WriteLine("|  3. Wyświetl pożyczkobiorców           |");
+                Console.WriteLine("|  4. Wyświetl dłużników                 |");
+                Console.WriteLine("|  5. Spłać rate                         |");
+                Console.WriteLine("|  6. Spłać dług                         |");
                 Console.WriteLine("|                                        |");
-                Console.WriteLine("|  6. Wróć                               |");
+                Console.WriteLine("|  7. Wróć                               |");
                 Console.WriteLine("|________________________________________|");
                 Console.WriteLine("\nTwój wybór: ");
                 caseSwitch = int.Parse(Console.ReadKey().KeyChar.ToString()); //Dokładnie to samo co wyżej
@@ -82,7 +83,7 @@ namespace Pożyczki
                     case 1:
                         i--;
                         Console.Clear();
-                        //Puste miejsca na przyszłe metody
+                        //
                         break;
                     case 2:
                         i--;
@@ -92,12 +93,12 @@ namespace Pożyczki
                     case 3:
                         i--;
                         Console.Clear();
-                        //
+                        MWyświetlP();
                         break;
                     case 4:
                         i--;
                         Console.Clear();
-                        //
+                        MWyświetlD();
                         break;
                     case 5:
                         i--;
@@ -105,6 +106,11 @@ namespace Pożyczki
                         //
                         break;
                     case 6:
+                        i--;
+                        Console.Clear();
+                        //
+                        break;
+                    case 7:
                         Console.Clear();
                         break;
                     default:
@@ -116,14 +122,87 @@ namespace Pożyczki
             }
         }
 
-        private static void MDodajKlienta()
+        private static void MWyświetlP()
         {
-            //
+            int i = 0;
+
+            while (i == 0)
+            {
+                int caseSwitch;
+                Console.WriteLine(" ________________________________________");
+                Console.WriteLine("|                                        |");
+                Console.WriteLine("|  1. Obecnych                           |");
+                Console.WriteLine("|  2. Byłych                             |");
+                Console.WriteLine("|                                        |");
+                Console.WriteLine("|  3. Wróć                               |");
+                Console.WriteLine("|________________________________________|");
+                Console.WriteLine("\nTwój wybór: ");
+                caseSwitch = int.Parse(Console.ReadKey().KeyChar.ToString()); //Dokładnie to samo co wyżej
+
+                switch (caseSwitch)
+                {
+                    case 1:
+                        i--;
+                        Console.Clear();
+                        //
+                        break;
+                    case 2:
+                        i--;
+                        Console.Clear();
+                        //
+                        break;
+                    case 3:
+                        Console.Clear();
+                        break;
+                    default:
+                        i--;
+                        Blad();
+                        break;
+                }
+                i++;
+            }
         }
 
-        private static void MKalkulatorRat()
+        private static void MWyświetlD()
         {
-            //
+            int i = 0;
+
+            while (i == 0)
+            {
+                int caseSwitch;
+                Console.WriteLine(" ________________________________________");
+                Console.WriteLine("|                                        |");
+                Console.WriteLine("|  1. Obecnych                           |");
+                Console.WriteLine("|  2. Byłych                             |");
+                Console.WriteLine("|                                        |");
+                Console.WriteLine("|  3. Wróć                               |");
+                Console.WriteLine("|________________________________________|");
+                Console.WriteLine("\nTwój wybór: ");
+                caseSwitch = int.Parse(Console.ReadKey().KeyChar.ToString()); //Dokładnie to samo co wyżej
+
+                switch (caseSwitch)
+                {
+                    case 1:
+                        i--;
+                        Console.Clear();
+                        //
+                        break;
+                    case 2:
+                        i--;
+                        Console.Clear();
+                        //
+                        break;
+                    case 3:
+                        Console.Clear();
+                        break;
+                    default:
+                        i--;
+                        Blad();
+                        break;
+                }
+                i++;
+            }
         }
+
     }
 }

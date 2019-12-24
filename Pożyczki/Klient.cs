@@ -4,19 +4,36 @@ using System.Text;
 
 namespace Pożyczki
 {
-    class Klient : IWyswietl
+    public class Klient : IWyswietl
     {
-        public void Byli(Klient klient)
+        public string imie;
+        public string nazwisko;
+        public int pesel;
+        public bool obecny;
+        public bool dluznik;
+
+        public Klient(string imie, string nazwisko, int pesel)
+        {
+            this.imie = imie;
+            this.nazwisko = nazwisko;
+            this.pesel = pesel;
+        }
+
+        static bool CzyDluznik()
+        {
+
+        }
+        public virtual void Byli(Klient klient)
         {
             throw new NotImplementedException();
         }
 
-        public void Obecni(Klient klient)
+        public virtual void Obecni(Klient klient)
         {
             throw new NotImplementedException();
         }
 
-        public void Wszyscy(Klient klient)
+        public virtual void Wszyscy(Klient klient)
         {
             throw new NotImplementedException();
         }

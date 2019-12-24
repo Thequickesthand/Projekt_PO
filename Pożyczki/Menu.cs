@@ -32,6 +32,7 @@ namespace Pożyczki
                 Console.WriteLine("|______________________|");
                 Console.WriteLine("\nTwój wybór: ");
                 caseSwitch = int.Parse(Console.ReadKey().KeyChar.ToString()); //Poprawić tak żeby czytało klawisz za dwukropkiem. Dodać ewentualny wyjątek (wyświetlaj błąd po wprowadzeniu litery)
+               //Zaimplementować wyjątek który będzie wyświetlał Blad() po kliknieciu litery na klawiaturze.
 
                 switch (caseSwitch)
                 {

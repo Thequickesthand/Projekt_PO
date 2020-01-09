@@ -6,8 +6,8 @@ namespace Pożyczki
 {
     interface IWyswietl
     {
-        public void Obecni(Klient klient);
-        public void Byli(Klient klient);
+        public void Obecny(Klient klient);
+        public void Byly(Klient klient);
         public void Wszyscy(Klient klient);
     }
 }

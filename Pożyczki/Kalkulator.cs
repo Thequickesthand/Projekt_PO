@@ -17,7 +17,7 @@ namespace Pożyczki
         }
         public static double[] ObliczRaty()
         {
-            Console.WriteLine("Zarobki: ");                                         //Do wszystkich ReadLine - dokładnie ten sam wyjątek co w menu, oraz dokładnie ta sama poprawaka estetyczna (numery po dwukropku)
+            Console.WriteLine("Zarobki: ");
             double zarobki = double.Parse(Console.ReadLine());
             Console.WriteLine("Wysokosc pożyczki: ");
             double pozyczka = double.Parse(Console.ReadLine());
@@ -25,7 +25,7 @@ namespace Pożyczki
             int splata = int.Parse(Console.ReadLine());
 
             double pieniadze_do_splaty = pozyczka + (pozyczka * Stale.oprocentowanie);
-            double rata = 0.0;
+            double rata = 0;
             int ilosc_rat = 0;
 
             if (splata == 1)

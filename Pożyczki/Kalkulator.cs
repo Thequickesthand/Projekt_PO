@@ -6,9 +6,9 @@ namespace Pożyczki
 {
     public static class Kalkulator
     {
-        private static bool OstatniaRata(int ilosc_rat, double rata, double pieniadze_do_splaty)
+        private static bool OstatniaRata(int ilosc_rat, double rata, double pieniadze_do_splaty) //coś nie tak liczy!!! Do poprawy
         {
-            if (pieniadze_do_splaty - (rata * ilosc_rat) == rata)
+            if (pieniadze_do_splaty - (rata * ilosc_rat) == -rata)
             {
                 return false;
             }

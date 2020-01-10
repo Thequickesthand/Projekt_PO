@@ -17,7 +17,7 @@ namespace Pożyczki
             Console.Clear();
         }
 
-        public static void WyswietlOB()
+        public static int WyswietlOB()
         {
             int i = 0;
 
@@ -37,18 +37,14 @@ namespace Pożyczki
                 switch (caseSwitch)
                 {
                     case "1":
-                        i--;
                         Console.Clear();
-                        //
-                        break;
+                        return 1;
                     case "2":
-                        i--;
                         Console.Clear();
-                        //
-                        break;
+                        return 2;
                     case "3":
                         Console.Clear();
-                        break;
+                        return 0;
                     default:
                         i--;
                         Blad();
@@ -56,25 +52,25 @@ namespace Pożyczki
                 }
                 i++;
             }
+            return 0;
         }
 
-        public static void KomunikatRaty()
+        public static string KomunikatRaty()
         {
-            Console.WriteLine("| Pieniądze do spłaty | Rata | Ilość rat |");
+            return "| Pieniądze do spłaty | Rata | Ilość rat |";
         }
-        public static void WyswietlRaty(double pieniadze_do_spaty, double raty, int ilosc_rat)
+        public static string WyswietlRaty(double pieniadze_do_spaty, double raty, int ilosc_rat)
         {
-            Console.WriteLine("| " + pieniadze_do_spaty + " | " + raty + " | " + ilosc_rat + " |");
+            return "| " + pieniadze_do_spaty + " | " + raty + " | " + ilosc_rat + " |";
         }
 
-
-        public static void KomunikatDane()
+        public static string KomunikatDane()
         {
-            Console.WriteLine("| Imie | Nazwisko | Pesel |");
+            return "| Imie | Nazwisko | Pesel |";
         }
-        public static void WyswietlDane(Dictionary<ulong, Klient> BazaKlientow, ulong pesel)
+        public static string WyswietlDane(Pozyczkobiorca klient, ulong pesel)
         {
-            BazaKlientow.Values.
+            return "| " + klient.imie + " | " + klient.nazwisko + " | " + (int)pesel + " |";
         }
     }
 }

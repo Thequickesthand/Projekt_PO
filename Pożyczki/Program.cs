@@ -5,9 +5,9 @@ namespace Pożyczki
 {
     class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            Dictionary<ulong, Klient> BazaKlientow = new Dictionary<ulong, Klient>();
+            Dictionary<ulong, Pozyczkobiorca> BazaPozyczkobiorcow = new Dictionary<ulong, Pozyczkobiorca>();
 
             static void MenuGlowne()
             {
@@ -39,8 +39,8 @@ namespace Pożyczki
                             Console.Clear();
                             double[] lista = new double[3];
                             lista = Kalkulator.ObliczRaty();
-                            Menu.KomunikatRaty();
-                            Menu.WyswietlRaty(lista[0], lista[1], (int)lista[2]);
+                            Console.WriteLine(Menu.KomunikatRaty());
+                            Console.WriteLine(Menu.WyswietlRaty(lista[0], lista[1], (int)lista[2]));
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -85,16 +85,25 @@ namespace Pożyczki
                         case "2":
                             i--;
                             Console.Clear();
+                            ZnajdzKlienta();
+                            Console.ReadKey();
+                            Console.Clear();
                             break;
                         case "3":
                             i--;
                             Console.Clear();
-                            Menu.WyswietlOB();
+                            int x = Menu.WyswietlOB();
+                            if (x == 0)
+                                break;
+                            else
+                                WyswietlKlientow(x);
+                            Console.ReadKey();
+                            Console.Clear();
                             break;
                         case "4":
                             i--;
                             Console.Clear();
-                            Menu.WyswietlOB();
+                            //Menu.WyswietlOB();
                             break;
                         case "5":
                             i--;
@@ -126,20 +135,43 @@ namespace Pożyczki
                 string imie = Console.ReadLine();
                 Console.WriteLine("Nazwisko: ");
                 string nazwisko = Console.ReadLine();
-                BazaKlientow.Add(pesel, new Klient(Kalkulator.ObliczRaty(), imie, nazwisko));
+                BazaPozyczkobiorcow.Add(pesel, new Pozyczkobiorca(Kalkulator.ObliczRaty(), imie, nazwisko));
             }
 
             void ZnajdzKlienta()
             {
                 Console.WriteLine("Pesel: ");
                 ulong pesel = ulong.Parse(Console.ReadLine());
+                Console.Clear();
 
-                if (BazaKlientow.ContainsKey(pesel))
+                if (BazaPozyczkobiorcow.TryGetValue(pesel, out Pozyczkobiorca value))
                 {
-
+                    Console.WriteLine(Menu.KomunikatDane() + Menu.KomunikatRaty());
+                    Console.WriteLine(Menu.WyswietlDane(value, pesel) + Menu.WyswietlRaty(value.pieniadze_do_splaty, value.rata, (int)value.ilosc_rat));
                 }
                 else
                     Menu.Blad();
+            }
+
+            void WyswietlKlientow(int i)
+            {
+                Console.WriteLine(Menu.KomunikatDane() + Menu.KomunikatRaty());
+                if (i == 1)
+                {
+                    foreach (var pair in BazaPozyczkobiorcow)
+                    {
+                        if (pair.Value.CzyObecny() == true)
+                            Console.WriteLine(Menu.WyswietlDane(pair.Value, pair.Key) + Menu.WyswietlRaty(pair.Value.pieniadze_do_splaty, pair.Value.rata, pair.Value.ilosc_rat));
+                    }
+                }
+                else
+                {
+                    foreach (var pair in BazaPozyczkobiorcow)
+                    {
+                        if (pair.Value.CzyObecny() == false)
+                            Console.WriteLine(Menu.WyswietlDane(pair.Value, pair.Key) + Menu.WyswietlRaty(pair.Value.pieniadze_do_splaty, pair.Value.rata, pair.Value.ilosc_rat));
+                    }
+                }   
             }
 
 

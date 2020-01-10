@@ -15,6 +15,11 @@ namespace Pożyczki
             this.ilosc_rat = (int)lista[2];
         }
 
+        public override bool CzyDluznik()
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool CzyObecny()
         {
             if (pieniadze_do_splaty == 0)
@@ -24,6 +29,21 @@ namespace Pożyczki
             }
             else
                 return true;
+        }
+
+        public override void Splac(double splata)
+        {
+            if (CzyObecny() == true)
+            {
+                if (splata >= rata)
+                {
+                    pieniadze_do_splaty -= rata;
+                    ilosc_rat--;
+                }
+                else
+                {
+                }
+            }
         }
     }
 }

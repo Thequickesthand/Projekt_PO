@@ -13,5 +13,7 @@ namespace Pożyczki
         public int ilosc_rat;
 
         public abstract bool CzyObecny();
+        public abstract void Splac(double splata);
+        public abstract bool CzyDluznik();
     }
 }

@@ -8,6 +8,7 @@ namespace Pożyczki
         static void Main(string[] args)
         {
             Dictionary<ulong, Pozyczkobiorca> BazaPozyczkobiorcow = new Dictionary<ulong, Pozyczkobiorca>();
+            Dictionary<Pozyczkobiorca, Dluznik> BazaDluznikow = new Dictionary<Pozyczkobiorca, Dluznik>();
 
             static void MenuGlowne()
             {
@@ -108,7 +109,7 @@ namespace Pożyczki
                         case "5":
                             i--;
                             Console.Clear();
-                            //
+                            SplacP();
                             break;
                         case "6":
                             i--;
@@ -148,6 +149,20 @@ namespace Pożyczki
                 {
                     Console.WriteLine(Menu.KomunikatDane() + Menu.KomunikatRaty());
                     Console.WriteLine(Menu.WyswietlDane(value, pesel) + Menu.WyswietlRaty(value.pieniadze_do_splaty, value.rata, (int)value.ilosc_rat));
+                }
+                else
+                    Menu.Blad();
+            }
+
+            void SplacP()
+            {
+                Console.WriteLine("Pesel: ");
+                ulong pesel = ulong.Parse(Console.ReadLine());
+                Console.WriteLine("Splata:");
+                double splata = double.Parse(Console.ReadLine());
+                if (BazaPozyczkobiorcow.TryGetValue(pesel, out Pozyczkobiorca value))
+                {
+                    value.Splac(splata);
                 }
                 else
                     Menu.Blad();

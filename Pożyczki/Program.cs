@@ -38,10 +38,11 @@ namespace Pożyczki
                             break;
                         case "3":
                             Console.Clear();
-                            double[] lista = new double[3];
-                            lista = Kalkulator.ObliczRaty();
+                            Console.WriteLine("Dluznik [TAK(1)/NIE(0)]: ");
+                            bool i = Convert.ToBoolean(int.Parse(Console.ReadLine()));
+                            double[] tablica = Kalkulator.ObliczRaty(i);
                             Console.WriteLine(Menu.KomunikatRaty());
-                            Console.WriteLine(Menu.WyswietlRaty(lista[0], lista[1], (int)lista[2]));
+                            Console.WriteLine(Menu.WyswietlRaty(tablica[0], tablica[1], (int)tablica[2]));
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -65,7 +66,7 @@ namespace Pożyczki
                     Console.WriteLine(" ________________________________________");
                     Console.WriteLine("|                                        |");
                     Console.WriteLine("|  1. Wyświetl wszystkich klientów       |");
-                    Console.WriteLine("|  2. Znajdz klienta                     |"); //Po PESEL, opcji nie było na kartce bo dopiero teraz wpadła mi do głowy. Będzie wyglądać profesjonalniej małym kosztem.
+                    Console.WriteLine("|  2. Znajdz klienta                     |");
                     Console.WriteLine("|  3. Wyświetl pożyczkobiorców           |");
                     Console.WriteLine("|  4. Wyświetl dłużników                 |");
                     Console.WriteLine("|  5. Spłać rate                         |");
@@ -81,7 +82,9 @@ namespace Pożyczki
                         case "1":
                             i--;
                             Console.Clear();
-                            //
+                            WyswietlWszystkichKlientow();
+                            Console.ReadKey();
+                            Console.Clear();
                             break;
                         case "2":
                             i--;
@@ -104,7 +107,11 @@ namespace Pożyczki
                         case "4":
                             i--;
                             Console.Clear();
-                            //Menu.WyswietlOB();
+                            int y = Menu.WyswietlOB();
+                            if (y == 0)
+                                break;
+                            else
+                                WyswietlDluznikow(y);
                             break;
                         case "5":
                             i--;
@@ -114,7 +121,7 @@ namespace Pożyczki
                         case "6":
                             i--;
                             Console.Clear();
-                            //
+                            SplacD();
                             break;
                         case "7":
                             Console.Clear();
@@ -132,11 +139,31 @@ namespace Pożyczki
             {
                 Console.WriteLine("Pesel: ");
                 ulong pesel = ulong.Parse(Console.ReadLine());
-                Console.WriteLine("Imie: ");
-                string imie = Console.ReadLine();
-                Console.WriteLine("Nazwisko: ");
-                string nazwisko = Console.ReadLine();
-                BazaPozyczkobiorcow.Add(pesel, new Pozyczkobiorca(Kalkulator.ObliczRaty(), imie, nazwisko));
+                if (BazaPozyczkobiorcow.TryGetValue(pesel, out Pozyczkobiorca value))
+                {
+                    if(BazaDluznikow.TryGetValue(value, out Dluznik dluznik))
+                    {
+                        double[] tablica = Kalkulator.ObliczRaty(true);
+                        value.pieniadze_do_splaty = tablica[0];
+                        value.rata = tablica[1];
+                        value.ilosc_rat = (int)tablica[2];
+                    }
+                    else
+                    {
+                        double[] tablica = Kalkulator.ObliczRaty(false);
+                        value.pieniadze_do_splaty = tablica[0];
+                        value.rata = tablica[1];
+                        value.ilosc_rat = (int)tablica[2];
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Imie: ");
+                    string imie = Console.ReadLine();
+                    Console.WriteLine("Nazwisko: ");
+                    string nazwisko = Console.ReadLine();
+                    BazaPozyczkobiorcow.Add(pesel, new Pozyczkobiorca(Kalkulator.ObliczRaty(false), imie, nazwisko, pesel));
+                }
             }
 
             void ZnajdzKlienta()
@@ -154,39 +181,113 @@ namespace Pożyczki
                     Menu.Blad();
             }
 
-            void SplacP()
+            void SplacD()
             {
                 Console.WriteLine("Pesel: ");
                 ulong pesel = ulong.Parse(Console.ReadLine());
-                Console.WriteLine("Splata:");
-                double splata = double.Parse(Console.ReadLine());
-                if (BazaPozyczkobiorcow.TryGetValue(pesel, out Pozyczkobiorca value))
+                if (BazaPozyczkobiorcow.TryGetValue(pesel, out Pozyczkobiorca value) && value.CzyObecny())
                 {
-                    value.Splac(splata);
+                    BazaDluznikow.TryGetValue(value, out Dluznik dluznik);
+                    Console.WriteLine("Dlug: " + dluznik.wysokosc_dlugu);
+                    Console.WriteLine("Splata:");
+                    double splata = double.Parse(Console.ReadLine());
+                    dluznik.wysokosc_dlugu -= splata;
+                    if (dluznik.CzyObecny() == false)
+                        value.czy_dluznik = false;
                 }
                 else
                     Menu.Blad();
             }
 
+            void SplacP()
+            {
+                Console.WriteLine("Pesel: ");
+                ulong pesel = ulong.Parse(Console.ReadLine());
+                if (BazaPozyczkobiorcow.TryGetValue(pesel, out Pozyczkobiorca value) && value.CzyObecny())
+                {
+                    Console.WriteLine("Rata: " + value.rata);
+                    Console.WriteLine("Splata:");
+                    double splata = double.Parse(Console.ReadLine());
+
+                    if (splata >= value.rata)
+                        value.rata -= splata;
+                    else
+                    {
+                        if (BazaDluznikow.TryGetValue(value, out Dluznik dluznik))
+                        {
+                            dluznik.pieniadze_do_splaty += (value.rata - splata) * Stale.op_dlugu;
+                        }
+                        else
+                        {
+                            double[] tablica = new double[3];
+                            BazaDluznikow.Add(value, new Dluznik(tablica, value.imie, value.nazwisko, value.pesel, (value.rata - splata) * Stale.op_dlugu));
+                            value.czy_dluznik = true;
+                        }
+                    }
+                }
+                else
+                    Menu.Blad();
+            }
+
+            void WyswietlWszystkichKlientow()
+            {
+                Console.WriteLine(Menu.KomunikatDane() + Menu.KomunikatRaty() + Menu.KomunikatDluznik());
+                foreach (var pair in BazaPozyczkobiorcow)
+                {
+                    if (BazaDluznikow.TryGetValue(pair.Value, out Dluznik dluznik))
+                        Console.WriteLine(Menu.WyswietlDane(pair.Value, pair.Key) + Menu.WyswietlRaty(pair.Value.pieniadze_do_splaty, pair.Value.rata, pair.Value.ilosc_rat) + Menu.WyswietlDluznik(dluznik.wysokosc_dlugu, true));
+                    else
+                        Console.WriteLine(Menu.WyswietlDane(pair.Value, pair.Key) + Menu.WyswietlRaty(pair.Value.pieniadze_do_splaty, pair.Value.rata, pair.Value.ilosc_rat) + Menu.WyswietlDluznik(0 , false));
+                }
+            }
+
             void WyswietlKlientow(int i)
             {
-                Console.WriteLine(Menu.KomunikatDane() + Menu.KomunikatRaty());
                 if (i == 1)
                 {
+                    Console.WriteLine(Menu.KomunikatDane() + Menu.KomunikatRaty() + Menu.KomunikatDluznik());
                     foreach (var pair in BazaPozyczkobiorcow)
                     {
                         if (pair.Value.CzyObecny() == true)
-                            Console.WriteLine(Menu.WyswietlDane(pair.Value, pair.Key) + Menu.WyswietlRaty(pair.Value.pieniadze_do_splaty, pair.Value.rata, pair.Value.ilosc_rat));
+                        {
+                            if (BazaDluznikow.TryGetValue(pair.Value, out Dluznik dluznik))
+                                Console.WriteLine(Menu.WyswietlDane(pair.Value, pair.Key) + Menu.WyswietlRaty(pair.Value.pieniadze_do_splaty, pair.Value.rata, pair.Value.ilosc_rat) + Menu.WyswietlDluznik(dluznik.wysokosc_dlugu, true));
+                            else
+                                Console.WriteLine(Menu.WyswietlDane(pair.Value, pair.Key) + Menu.WyswietlRaty(pair.Value.pieniadze_do_splaty, pair.Value.rata, pair.Value.ilosc_rat) + Menu.WyswietlDluznik(0 , false));
+                        }
                     }
                 }
                 else
                 {
+                    Console.WriteLine(Menu.KomunikatDane());
                     foreach (var pair in BazaPozyczkobiorcow)
                     {
                         if (pair.Value.CzyObecny() == false)
-                            Console.WriteLine(Menu.WyswietlDane(pair.Value, pair.Key) + Menu.WyswietlRaty(pair.Value.pieniadze_do_splaty, pair.Value.rata, pair.Value.ilosc_rat));
+                            Console.WriteLine(Menu.WyswietlDane(pair.Value, pair.Key));
                     }
                 }   
+            }
+
+            void WyswietlDluznikow(int i)
+            {
+                Console.WriteLine(Menu.KomunikatDane() + Menu.KomunikatRaty());
+                if (i == 1)
+                {
+                    foreach (var pair in BazaDluznikow)
+                    {
+                        if (pair.Value.CzyObecny() == true)
+                            Console.WriteLine(Menu.WyswietlDane(pair.Value, pair.Key.pesel));
+                    }
+                }
+                else
+                {
+                    foreach (var pair in BazaDluznikow)
+                    {
+
+                        if (pair.Value.CzyObecny() == false)
+                            Console.WriteLine(Menu.WyswietlDane(pair.Value, pair.Key.pesel));
+                    }
+                }
             }
 
 

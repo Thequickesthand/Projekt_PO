@@ -8,12 +8,12 @@ namespace Pożyczki
     {
         public string imie;
         public string nazwisko;
+        public ulong pesel;
         public double pieniadze_do_splaty;
         public double rata;
         public int ilosc_rat;
+        public bool czy_dluznik = false;
 
         public abstract bool CzyObecny();
-        public abstract void Splac(double splata);
-        public abstract bool CzyDluznik();
     }
 }

@@ -6,44 +6,25 @@ namespace Pożyczki
 {
     public class Pozyczkobiorca : Klient
     {
-        public Pozyczkobiorca(double[] lista, string imie, string nazwisko)
+        public Pozyczkobiorca(double[] tablica, string imie, string nazwisko, ulong pesel)
         {
             this.imie = imie;
             this.nazwisko = nazwisko;
-            this.pieniadze_do_splaty = lista[0];
-            this.rata = lista[1];
-            this.ilosc_rat = (int)lista[2];
-        }
-
-        public override bool CzyDluznik()
-        {
-            throw new NotImplementedException();
+            this.pesel = pesel;
+            this.pieniadze_do_splaty = tablica[0];
+            this.rata = tablica[1];
+            this.ilosc_rat = (int)tablica[2];
         }
 
         public override bool CzyObecny()
         {
-            if (pieniadze_do_splaty == 0)
+            if (pieniadze_do_splaty == 0 && this.czy_dluznik == false)
             {
                 this.rata = 0;
                 return false;
             }
             else
                 return true;
-        }
-
-        public override void Splac(double splata)
-        {
-            if (CzyObecny() == true)
-            {
-                if (splata >= rata)
-                {
-                    pieniadze_do_splaty -= rata;
-                    ilosc_rat--;
-                }
-                else
-                {
-                }
-            }
         }
     }
 }

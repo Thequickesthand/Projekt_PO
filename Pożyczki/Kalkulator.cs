@@ -15,7 +15,7 @@ namespace Pożyczki
             else
                 return true;
         }
-        public static double[] ObliczRaty()
+        public static double[] ObliczRaty(bool dluznik)
         {
             Console.WriteLine("Zarobki: ");
             double zarobki = double.Parse(Console.ReadLine());
@@ -24,9 +24,13 @@ namespace Pożyczki
             Console.WriteLine("Rodzaj spłaty ( [1] - Szybko / [2] - Wolno ): ");
             int splata = int.Parse(Console.ReadLine());
 
-            double pieniadze_do_splaty = pozyczka + (pozyczka * Stale.oprocentowanie);
+            double pieniadze_do_splaty = 0;
             double rata = 0;
             int ilosc_rat = 0;
+            if (dluznik == true)
+                pieniadze_do_splaty = (pozyczka * Stale.oprocentowanie) * Stale.dod_op_dluz;
+            else
+                pieniadze_do_splaty = pozyczka * Stale.oprocentowanie;
 
             if (splata == 1)
             {
@@ -43,9 +47,9 @@ namespace Pożyczki
                     ilosc_rat--;
             }
 
-            double[] lista = new double[3] { pieniadze_do_splaty, rata, ilosc_rat };
+            double[] tablica = new double[3] { pieniadze_do_splaty, rata, ilosc_rat };
             Console.Clear();
-            return lista;
+            return tablica;
         }
     }
 }

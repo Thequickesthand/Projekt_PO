@@ -72,5 +72,14 @@ namespace Pożyczki
         {
             return "| " + klient.imie + " | " + klient.nazwisko + " | " + (int)pesel + " |";
         }
+
+        public static string KomunikatDluznik()
+        {
+            return "| Czy dluznki | Dlug |";
+        }
+        public static string WyswietlDluznik(double dlug, bool czy)
+        {
+            return "| " + czy + " | " + dlug + " |";
+        }
     }
 }

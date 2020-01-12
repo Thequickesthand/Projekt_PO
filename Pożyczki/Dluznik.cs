@@ -6,18 +6,17 @@ namespace Pożyczki
 {
     class Dluznik : Pozyczkobiorca
     {
-        double wysokosc_dlugu = 0.0;
+        public double wysokosc_dlugu;
 
-        public Dluznik(double[] lista, string imie, string nazwisko) : base(lista, imie, nazwisko)
+        public Dluznik(double[] tablica, string imie, string nazwisko, ulong pesel, double wysokosc_dlugu) : base(tablica, imie, nazwisko, pesel)
         {
+            this.wysokosc_dlugu = wysokosc_dlugu;
         }
 
         public override bool CzyObecny()
         {
             if (wysokosc_dlugu == 0)
-            {
                 return false;
-            }
             else
                 return true;
         }

@@ -6,6 +6,7 @@ namespace Pożyczki
 {
     public static class Kalkulator
     {
+
         private static bool OstatniaRata(int ilosc_rat, double rata, double pieniadze_do_splaty) 
         {
             if (pieniadze_do_splaty - (rata * ilosc_rat) == -rata)
@@ -18,13 +19,35 @@ namespace Pożyczki
         public static double[] ObliczRaty(bool dluznik)
         {
             Console.WriteLine("Zarobki: ");
-            double zarobki = double.Parse(Console.ReadLine());
+            double zarobki = new double();
+            double pozyczka = new double();
+            try
+            {
+                zarobki = double.Parse(Console.ReadLine());
+            }
+            catch
+            {
+                Menu.Blad();
+                Console.Clear();
+                return new double[3] { 0, 0, 0 };
+            }
+
             Console.WriteLine("Wysokosc pożyczki: ");
-            double pozyczka = double.Parse(Console.ReadLine());
+            try
+            {
+                pozyczka = double.Parse(Console.ReadLine());
+            }
+            catch 
+            { 
+                Menu.Blad();
+                Console.Clear();
+                return new double[3] { 0, 0, 0 };
+            }
             Console.WriteLine("Rodzaj spłaty ( [1] - Szybko / [2] - Wolno ): ");
             int splata = int.Parse(Console.ReadLine());
 
             double pieniadze_do_splaty = 0;
+
             double rata = 0;
             int ilosc_rat = 0;
             if (dluznik == true)
@@ -46,8 +69,14 @@ namespace Pożyczki
                 if (OstatniaRata(ilosc_rat, rata, pieniadze_do_splaty) == false)
                     ilosc_rat--;
             }
+            else if (splata != 1 && splata != 2)
+            {
+                Menu.Blad();
+                Console.Clear();
+                return new double[3] { 0, 0, 0 };
+            }
 
-            double[] tablica = new double[3] { pieniadze_do_splaty, rata, ilosc_rat };
+                double[] tablica = new double[3] { pieniadze_do_splaty, rata, ilosc_rat };
             Console.Clear();
             return tablica;
         }
